@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── SOVEREIGN CYBER THEME ─────────────────────────────────────────────── */
+:root {
+  --gold: #FFD700;
+  --cyan: #00FFFF;
+  --bg: #080B0F;
+  --bg2: #0D1117;
+  --bg3: #111827;
+  --glass: rgba(255, 255, 255, 0.03);
+  --border-gold: rgba(255, 215, 0, 0.15);
+  --border-cyan: rgba(0, 255, 255, 0.15);
+  --text: #E8EAF0;
+  --muted: #6B7280;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+}
+
+/* ─── BASE ───────────────────────────────────────────────────────────────── */
+* { box-sizing: border-box; }
+
+html, body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ─── SCROLLBAR ──────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255, 215, 0, 0.2); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 215, 0, 0.4); }
+
+/* ─── SELECTION ──────────────────────────────────────────────────────────── */
+::selection { background: rgba(255, 215, 0, 0.2); color: var(--gold); }
+
+/* ─── FONT UTILITIES ─────────────────────────────────────────────────────── */
+.font-mono { font-family: var(--font-mono); }
+
+/* ─── GLASSMORPHISM ──────────────────────────────────────────────────────── */
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-gold);
+}
+
+/* ─── NEON GLOW UTILITIES ────────────────────────────────────────────────── */
+.glow-gold { box-shadow: 0 0 20px rgba(255, 215, 0, 0.15); }
+.glow-cyan { box-shadow: 0 0 20px rgba(0, 255, 255, 0.15); }
+.text-glow-gold { text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+.text-glow-cyan { text-shadow: 0 0 20px rgba(0, 255, 255, 0.5); }
+
+/* ─── ANIMATIONS ─────────────────────────────────────────────────────────── */
+@keyframes pulse-gold {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.animate-spin-slow { animation: spin-slow 8s linear infinite; }
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-pulse-gold { animation: pulse-gold 2s ease-in-out infinite; }
+
+/* ─── COMMAND INPUT ──────────────────────────────────────────────────────── */
+.command-input {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  border-radius: 12px;
+  color: var(--text);
+  font-family: var(--font-mono);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.command-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px rgba(255, 215, 0, 0.2), 0 0 20px rgba(255, 215, 0, 0.06);
+  outline: none;
+}
+
+/* ─── HOLOGRAPHIC EFFECT ─────────────────────────────────────────────────── */
+.holographic {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 255, 0.03) 0%,
+    rgba(255, 215, 0, 0.03) 50%,
+    rgba(0, 255, 255, 0.03) 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+.holographic::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+}
+
+/* ─── CONTENT CARD HOVER ─────────────────────────────────────────────────── */
+.content-card {
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.content-card:hover {
+  transform: translateY(-2px);
+}
+
+/* ─── PIPELINE STEP ──────────────────────────────────────────────────────── */
+.pipe-step-active {
+  animation: pulse-gold 1.5s ease-in-out infinite;
+}
+
+/* ─── CONSOLE LOG ────────────────────────────────────────────────────────── */
+.console-log {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  line-height: 1.7;
+}
+
+/* ─── TIER CARD FEATURED ─────────────────────────────────────────────────── */
+.tier-featured {
+  background: rgba(255, 215, 0, 0.04);
+  border-color: rgba(255, 215, 0, 0.25);
+  position: relative;
+}
+.tier-featured::before {
+  content: 'MOST POPULAR';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 215, 0, 0.9);
+  color: #000;
+  font-size: 0.55rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  letter-spacing: 0.1em;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* ─── FOCUS VISIBLE ──────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 1px solid rgba(255, 215, 0, 0.4);
+  outline-offset: 2px;
+}
+
+/* ─── PRINT ──────────────────────────────────────────────────────────────── */
+@media print {
+  body { background: white; color: black; }
+}
