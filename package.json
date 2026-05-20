@@ -17,22 +17,19 @@
       "typescript": "^5.5.4",
 
       "gun": "^0.2020.1240",
-      "gun-eth": "^1.1.2",
 
       "@pinata/sdk": "^2.1.0",
       "ipfs-http-client": "^60.0.1",
-      "multiaddr": "^12.1.14",
+      "multiaddr": "^10.0.0",
 
-    "algosdk": "^2.7.0",
-    "ethers": "^6.13.1",
-    "viem": "^2.17.4",
-    "wagmi": "^2.12.4",
-    "@rainbow-me/rainbowkit": "^2.1.5",
+      "algosdk": "^2.7.0",
+      "ethers": "^6.13.1",
+      "viem": "^2.17.4",
+      "wagmi": "^2.12.4",
+      "@rainbow-me/rainbowkit": "^2.1.5",
       "@tanstack/react-query": "^5.51.21",
 
-      "liboqs-node": "^0.8.0",
       "crypto-js": "^4.2.0",
-      "noble-post-quantum": "^1.0.0",
       "@noble/hashes": "^1.4.0",
 
     "axios": "^1.7.3",
@@ -56,7 +53,6 @@
     "@types/node": "^22.0.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
-    "@types/gun": "^3.4.6",
     "@types/crypto-js": "^4.2.2",
     "@types/formidable": "^3.4.5",
     "@types/uuid": "^10.0.0",
