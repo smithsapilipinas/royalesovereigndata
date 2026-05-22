@@ -1,0 +1,112 @@
+---
+# ROYALE — Akash Network Deployment
+# Deploy this on Akash to run Royale on decentralized cloud infrastructure.
+#
+# PREREQUISITES:
+#   1. Install Akash CLI: https://docs.akash.network/guides/cli/install
+#   2. Fund your wallet with AKT (for deployment)
+#   3. Build and push Docker image:
+#      docker build -t your-registry/royale-sovereign:latest .
+#      docker push your-registry/royale-sovereign:latest
+#
+# DEPLOY:
+#   akash tx deployment create akash.sdl.yml \
+#     --from <your-wallet> \
+#     --chain-id akashnet-2 \
+#     --node https://rpc.akash.forbole.com:443
+#
+# ENVIRONMENT:
+#   Set secrets via Akash's env block (see services.royale.env below).
+#   Do NOT commit real API keys — replace placeholder values.
+
+version: "2.0"
+
+services:
+  royale:
+    image: your-registry/royale-sovereign:latest
+    expose:
+      - port: 3000
+        as: 80
+        to:
+          - global: true
+    env:
+      # Replace with your actual values
+      - NODE_ENV=production
+      - NEXT_PUBLIC_GUN_PEERS=https://gun-relay.ecko.me/gun,https://gun-us.herokuapp.com/gun
+      - PINATA_API_KEY=REPLACE_ME
+      - PINATA_SECRET_API_KEY=REPLACE_ME
+      - PINATA_JWT=REPLACE_ME
+      - ALGORAND_NODE_URL=https://mainnet-api.algonode.cloud
+      - ALGORAND_INDEXER_URL=https://mainnet-idx.algonode.cloud
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - OLLAMA_MODEL=llama3.2
+      - BACALHAU_API_URL=https://bootstrap.production.bacalhau.org:1234/api/v1
+    depends_on:
+      - ollama
+
+  # Ollama runs alongside Royale in the same deployment
+  # Provides local AI inference — no external API calls
+  ollama:
+    image: ollama/ollama:latest
+    expose:
+      - port: 11434
+        as: 11434
+        to:
+          - service: royale
+    command:
+      - /bin/sh
+      - -c
+      - "ollama serve & sleep 5 && ollama pull llama3.2 && wait"
+
+profiles:
+  compute:
+    royale:
+      resources:
+        cpu:
+          units: 1.0
+        memory:
+          size: 1Gi
+        storage:
+          size: 2Gi
+
+    ollama:
+      resources:
+        cpu:
+          units: 2.0
+        memory:
+          size: 4Gi
+        storage:
+          size: 10Gi
+        # Uncomment if deploying on a provider with GPU support:
+        # gpu:
+        #   units: 1
+        #   attributes:
+        #     vendor:
+        #       nvidia:
+
+  placement:
+    akash:
+      # Require providers with good uptime ratings
+      attributes:
+        host: akash
+      signedBy:
+        anyOf:
+          - akash1365yvmc4s7awdyj3n2sav7xfx76adc6dnmlx63
+          - akash18qa2a2ltfyvkyj0ggj3hkcej9pcjrhm45ga85zf
+      pricing:
+        royale:
+          denom: uakt
+          amount: 2000
+        ollama:
+          denom: uakt
+          amount: 5000
+
+deployment:
+  royale:
+    akash:
+      profile: royale
+      count: 1
+  ollama:
+    akash:
+      profile: ollama
+      count: 1
